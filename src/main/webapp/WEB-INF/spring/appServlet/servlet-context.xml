@@ -41,19 +41,11 @@
 		<beans:property name="password" value="${jdbc.password}" />
 	</beans:bean>
 
-<!--
-	<beans:bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<beans:property name="dataSource" ref="dataSource" />
-		<beans:property name="hibernateProperties">
-			<beans:props>
-				<beans:prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect
-				</beans:prop>
-				<beans:prop key="hibernate.show_sql">true</beans:prop>
-			</beans:props>
-		</beans:property>
-	</beans:bean>
--->
+	<!-- <beans:bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 
+		<beans:property name="dataSource" ref="dataSource" /> <beans:property name="hibernateProperties"> 
+		<beans:props> <beans:prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect 
+		</beans:prop> <beans:prop key="hibernate.show_sql">true</beans:prop> </beans:props> 
+		</beans:property> </beans:bean> -->
 
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource" />
@@ -65,11 +57,14 @@
 		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
 	</beans:bean>
 
-<!--
-	<beans:bean id="userDao" class="net.kc.spring.user.domain.UserDaoImpl">
-		<beans:property name="sqlSession" ref="sqlSession" />
+	<beans:bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface"
+			value="net.kc.spring.user.domain.UserMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</beans:bean>
- -->
+
+	<!-- <beans:bean id="userDao" class="net.kc.spring.user.domain.UserDaoImpl"> 
+		<beans:property name="sqlSession" ref="sqlSession" /> </beans:bean> -->
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
 
