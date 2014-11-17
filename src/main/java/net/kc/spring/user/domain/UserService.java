@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface UserService {
 
-	public Long createUser(User user);
+    public Long createUser(User user);
 
-	public User getUser(Long id);
-	
-	public List<User> findUsers(String username);
+    public User getUser(Long id);
+
+    public List<User> findUsers(String username);
 }
