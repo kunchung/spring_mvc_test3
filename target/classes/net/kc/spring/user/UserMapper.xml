@@ -12,4 +12,7 @@
 	<insert id="createUser" parameterType="net.kc.spring.user.domain.User">
 		insert into user values (#{id}, #{username})
 	</insert>
+	<select id="findUsers" resultType="User">
+		select * from user where username like '%#{username}%'
+	</select>
 </mapper>
