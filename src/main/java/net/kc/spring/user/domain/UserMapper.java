@@ -18,6 +18,6 @@ public interface UserMapper {
     @Select("select * from user where username like '%#{username}%'")
     public List<User> findUsers(String username);
 
-    @Select("call identity()")
-    public Long getNewId();
+    //@Select("call identity()")
+    //public Long getNewId();
 }

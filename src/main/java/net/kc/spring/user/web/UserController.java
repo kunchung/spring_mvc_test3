@@ -17,33 +17,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(value = "users")
 public class UserController {
 
-    @Autowired
-    private UserService service;
+	@Autowired
+	private UserService service;
 
-    // private static final String VN_REG_OK = "redirect:/users/reg_success";
-    // private static final String VN_REG_OK = "users/registrationOk";
+	// private static final String VN_REG_OK = "redirect:/users/reg_success";
+	// private static final String VN_REG_OK = "users/registrationOk";
 
-    @SuppressWarnings("unused")
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	@SuppressWarnings("unused")
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @RequestMapping(value = "new", method = RequestMethod.GET)
-    public String getRegistrationForm(Model model) {
-	model.addAttribute(new User());
-	return "users/regForm";
-    }
+	@RequestMapping(value = "new", method = RequestMethod.GET)
+	public String getRegistrationForm(Model model) {
+		model.addAttribute(new User());
+		return "users/regForm";
+	}
 
-    @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String createUser(@ModelAttribute User user) {
-	service.createUser(user);
-	System.out.println("id: " + user.getId() + ", username: " + user.getUsername());
-	return "redirect:/users/view?id=" + user.getId();
-	// return VN_REG_OK;
-    }
+	@RequestMapping(value = "register", method = RequestMethod.POST)
+	public String createUser(@ModelAttribute User user) {
+		service.createUser(user);
+		System.out.println("id: " + user.getId() + ", username: " + user.getUsername());
+		return "redirect:/users/view?id=" + user.getId();
+		// return VN_REG_OK;
+	}
 
-    @RequestMapping(value = "view")
-    public String viewUser(@RequestParam Long id, Model model) {
-	System.out.println("id: " + id);
-	model.addAttribute("user", service.getUser(id));
-	return "users/viewUser";
-    }
+	@RequestMapping(value = "view")
+	public String viewUser(@RequestParam Long id, Model model) {
+		System.out.println("id: " + id);
+		model.addAttribute("user", service.getUser(id));
+		return "users/viewUser";
+	}
 }

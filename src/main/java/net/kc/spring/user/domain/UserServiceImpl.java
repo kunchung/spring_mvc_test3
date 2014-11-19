@@ -8,22 +8,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserDaoImpl dao;
+	@Autowired
+	private UserDaoImpl dao;
 
-    @Override
-    public Long createUser(User user) {
-	return dao.createUser(user);
-    }
+	@Override
+	public Long createUser(User user) {
+		return dao.createUser(user);
+	}
 
-    @Override
-    public User getUser(Long id) {
-	return dao.getUser(id);
-    }
+	@Override
+	public User getUser(Long id) {
+		return dao.getUser(id);
+	}
 
-    @Override
-    public List<User> findUsers(String username) {
-	return dao.findUsers(username);
-    }
+	@Override
+	public List<User> findUsers(String username) {
+		return dao.findUsers(username);
+	}
 
 }
