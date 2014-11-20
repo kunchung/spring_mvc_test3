@@ -3,7 +3,6 @@ package net.kc.spring.user.domain;
 public class UserGroupItem {
 	private Long id;
 	private Long groupId;
-	private Long userId;
 	private User user;
 
 	public Long getId() {
@@ -20,14 +19,6 @@ public class UserGroupItem {
 
 	public void setGroupId(Long groupId) {
 		this.groupId = groupId;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 	public User getUser() {

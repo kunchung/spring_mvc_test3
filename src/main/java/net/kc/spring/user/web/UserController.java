@@ -70,7 +70,6 @@ public class UserController {
 		for (User user : userList) {
 			UserGroupItem item = new UserGroupItem();
 			item.setUser(user);
-			//item.setUserId(user.getId());
 			itemList.add(item);
 		}
 		userGroup.setItemList(itemList);
@@ -82,5 +81,12 @@ public class UserController {
 	public String viewUserGroup(@RequestParam Long id, Model model) {
 		model.addAttribute("group", service.getUserGroup(id));
 		return "users/viewGroup";
+	}
+
+	@RequestMapping(value = "listGroups", method = RequestMethod.GET)
+	public String getAllUserGroups(Model model) {
+		List<UserGroup> groupList = service.getAllUserGroups();
+		model.addAttribute("groupList", groupList);
+		return "users/listAllGroups";
 	}
 }

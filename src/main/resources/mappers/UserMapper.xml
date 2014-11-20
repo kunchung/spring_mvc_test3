@@ -15,6 +15,21 @@
 		insert into user_group_item (group_id, user_id) values (#{groupId}, #{userId})
 	</insert>
 
+	<select id="getAllUserGroups" resultMap="userGroupMap">
+		SELECT g.id, 
+			g.name, 
+			i.id as user_group_item_id, 
+			i.user_id, 
+			u.username
+		FROM user_group g, user_group_item i, user u
+		WHERE g.id=i.group_id AND i.user_id=u.id 
+		ORDER BY g.id, u.id
+	</select>
+
+	<select id="getAllUsers" resultMap="userMap">
+		select * from user order by id
+	</select>
+
 	<select id="getUserGroup" resultMap="userGroupMap">
 		SELECT g.id, 
 			g.name, 
@@ -23,8 +38,13 @@
 			u.username
 		FROM user_group g, user_group_item i, user u
 		WHERE g.id=i.group_id AND i.user_id=u.id 
-			AND g.id=106;
+			AND g.id = #{id};
 	</select>
+
+	<resultMap id="userMap" type="net.kc.spring.user.domain.User">
+		<id property="id" column="id" />
+		<result property="username" column="username" />
+	</resultMap>
 
 	<resultMap id="userGroupMap" type="net.kc.spring.user.domain.UserGroup">
 		<id property="id" column="id" />
@@ -32,10 +52,7 @@
 		<collection property="itemList" ofType="net.kc.spring.user.domain.UserGroupItem">
 			<id property="id" column="user_group_item_id" />
 			<result property="groupId" column="id" />
-			<association property="user" javaType="net.kc.spring.user.domain.User">
-				<id property="id" column="user_id" />
-				<result property="username" column="username" />
-			</association>
+			<association property="user" column="user_id" resultMap="userMap"/>
 		</collection>
 	</resultMap>
 </mapper>

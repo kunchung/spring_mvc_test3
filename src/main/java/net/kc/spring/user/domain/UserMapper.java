@@ -18,8 +18,8 @@ public interface UserMapper {
 	@Select("select * from user where username like '%#{username}%'")
 	public List<User> findUsers(String username);
 
-	@Select("select * from user order by id")
-	public List<User> getAllUsers();
+	//@Select("select * from user order by id")
+	//public List<User> getAllUsers();
 
 	@Insert("insert into user_group values (#{id}, #{name})")
 	@Options(useGeneratedKeys = true, keyProperty = "id")

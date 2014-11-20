@@ -41,4 +41,9 @@ public class UserServiceImpl implements UserService {
 		return dao.getUserGroup(id);
 	}
 
+	@Override
+	public List<UserGroup> getAllUserGroups() {
+		return dao.getAllUserGroups();
+	}
+
 }

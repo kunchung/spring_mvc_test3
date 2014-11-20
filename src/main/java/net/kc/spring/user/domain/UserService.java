@@ -15,4 +15,6 @@ public interface UserService {
 	public Long createUserGroup(UserGroup userGroup);
 	
 	public UserGroup getUserGroup(Long id);
+	
+	public List<UserGroup> getAllUserGroups();
 }

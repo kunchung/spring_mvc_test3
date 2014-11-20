@@ -40,7 +40,9 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> getAllusers() {
-		return mapper.getAllUsers();
+		List<User> userList = sqlSession.selectList(mapperNs + ".getAllUsers");
+		return userList;
+		//return mapper.getAllUsers();
 	}
 
 	@Override
@@ -74,17 +76,7 @@ public class UserDaoImpl implements UserDao {
 
 	private void insertUserGroupItem1(Long groupId, UserGroupItem item) {
 		item.setGroupId(groupId);
-		item.setUserId(item.getUser().getId());
 		sqlSession.insert(mapperNs + ".insertUserGroupItem", item);
-	}
-
-	/**
-	 * Insert using mapper class. It does not always work for unkown reasons.
-	 */
-	@SuppressWarnings("unused")
-	private void insertUserGroupItem3(Long groupId, UserGroupItem item) {
-		item.setGroupId(groupId);
-		mapper.insertUserGroupItem3(item);
 	}
 
 	@SuppressWarnings("unused")
@@ -95,5 +87,20 @@ public class UserDaoImpl implements UserDao {
 		sqlSession.insert(mapperNs + ".insertUserGroupItem2", r);
 		item.setId((Long) r.get("id"));
 		logger.debug("r: " + r);
+	}
+
+	/**
+	 * Insert using mapper class. It does not always work for unknown reason.
+	 */
+	@SuppressWarnings("unused")
+	private void insertUserGroupItem3(Long groupId, UserGroupItem item) {
+		item.setGroupId(groupId);
+		mapper.insertUserGroupItem3(item);
+	}
+
+	@Override
+	public List<UserGroup> getAllUserGroups() {
+		List<UserGroup> groupList = sqlSession.selectList(mapperNs + ".getAllUserGroups");
+		return groupList;
 	}
 }
