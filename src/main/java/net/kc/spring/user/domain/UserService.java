@@ -9,4 +9,6 @@ public interface UserService {
 	public User getUser(Long id);
 
 	public List<User> findUsers(String username);
+	
+	public List<User> getAllUsers();
 }

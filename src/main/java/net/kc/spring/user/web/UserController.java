@@ -1,5 +1,7 @@
 package net.kc.spring.user.web;
 
+import java.util.List;
+
 import net.kc.spring.user.domain.User;
 import net.kc.spring.user.domain.UserService;
 
@@ -23,7 +25,6 @@ public class UserController {
 	// private static final String VN_REG_OK = "redirect:/users/reg_success";
 	// private static final String VN_REG_OK = "users/registrationOk";
 
-	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@RequestMapping(value = "new", method = RequestMethod.GET)
@@ -45,5 +46,13 @@ public class UserController {
 		System.out.println("id: " + id);
 		model.addAttribute("user", service.getUser(id));
 		return "users/viewUser";
+	}
+
+	@RequestMapping(value = "list")
+	public String getAllUsers(Model model) {
+		List<User> userList = service.getAllUsers();
+		logger.debug("num user: " + userList.size());
+		model.addAttribute("userList", userList);
+		return "users/listAllUsers";
 	}
 }

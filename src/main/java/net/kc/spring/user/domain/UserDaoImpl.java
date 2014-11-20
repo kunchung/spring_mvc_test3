@@ -39,4 +39,9 @@ public class UserDaoImpl implements UserDao {
 		// return sqlSession.selectList("net.kc.spring.user.UserMapper.findUsers");
 	}
 
+	@Override
+	public List<User> getAllusers() {
+		return mapper.getAllUsers();
+	}
+
 }

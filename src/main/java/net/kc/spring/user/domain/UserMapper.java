@@ -18,6 +18,9 @@ public interface UserMapper {
     @Select("select * from user where username like '%#{username}%'")
     public List<User> findUsers(String username);
 
+    @Select("select * from user order by id")
+    public List<User> getAllUsers();
+
     //@Select("call identity()")
     //public Long getNewId();
 }
