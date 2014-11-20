@@ -11,4 +11,8 @@ public interface UserService {
 	public List<User> findUsers(String username);
 	
 	public List<User> getAllUsers();
+	
+	public Long createUserGroup(UserGroup userGroup);
+	
+	public UserGroup getUserGroup(Long id);
 }

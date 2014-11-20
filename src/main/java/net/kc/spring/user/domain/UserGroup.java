@@ -1,18 +1,18 @@
 package net.kc.spring.user.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
-public class User {
-
+public class UserGroup {
 	private Long id;
-	private String username;
+	private String name;
+	private List<UserGroupItem> itemList;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,16 +25,24 @@ public class User {
 		this.id = id;
 	}
 
-	@Column(name = "username")
-	public String getUsername() {
-		return username;
+	public String getName() {
+		return name;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	@Column(name = "name")
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<UserGroupItem> getItemList() {
+		return itemList;
+	}
+
+	public void setItemList(List<UserGroupItem> userList) {
+		this.itemList = userList;
 	}
 
 	public String toString() {
-		return "id: " + getId() + ", username: " + getUsername();
+		return "id: " + id + ", name: " + name;
 	}
 }

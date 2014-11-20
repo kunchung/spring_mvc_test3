@@ -4,6 +4,10 @@
 <html>
 <body>
 	<table border="1">
+		<tr>
+			<td>Id</td>
+			<td>Username</td>
+		</tr>
 		<c:forEach var="user" items="${userList}">
 			<tr>
 				<td><c:out value="${user.id}" /></td>

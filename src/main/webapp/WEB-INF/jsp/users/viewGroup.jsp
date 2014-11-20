@@ -1,14 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<c:url var="createUserUrl" value="/users/createUserForm" />
+<c:url var="createGroupUrl" value="/users/createGroupForm" />
+
 <html>
 <body>
-	Id:
-	<c:out value="${user.id}" />
-	<br> Username:
-	<c:out value="${user.username}" />
+	Group information
+	<br> Id:
+	<c:out value="${group.id}" />
+	<br> Name:
+	<c:out value="${group.name}" />
 	<br>
-	<a href="${createUserUrl}">Create User</a>
+	<a href="${createGroupUrl}">Create Group</a>
 </body>
 </html>

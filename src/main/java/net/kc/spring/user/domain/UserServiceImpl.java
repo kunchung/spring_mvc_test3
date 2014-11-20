@@ -31,4 +31,14 @@ public class UserServiceImpl implements UserService {
 		return dao.getAllusers();
 	}
 
+	@Override
+	public Long createUserGroup(UserGroup userGroup) {
+		return dao.createUserGroup(userGroup);
+	}
+
+	@Override
+	public UserGroup getUserGroup(Long id) {
+		return dao.getUserGroup(id);
+	}
+
 }

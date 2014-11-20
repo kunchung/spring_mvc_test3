@@ -1,8 +1,11 @@
 package net.kc.spring.user.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.kc.spring.user.domain.User;
+import net.kc.spring.user.domain.UserGroup;
+import net.kc.spring.user.domain.UserGroupItem;
 import net.kc.spring.user.domain.UserService;
 
 import org.slf4j.Logger;
@@ -27,32 +30,57 @@ public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	@RequestMapping(value = "new", method = RequestMethod.GET)
-	public String getRegistrationForm(Model model) {
+	@RequestMapping(value = "createUserForm", method = RequestMethod.GET)
+	public String createUserForm(Model model) {
 		model.addAttribute(new User());
-		return "users/regForm";
+		return "users/createUserForm";
 	}
 
-	@RequestMapping(value = "register", method = RequestMethod.POST)
+	@RequestMapping(value = "createUser", method = RequestMethod.POST)
 	public String createUser(@ModelAttribute User user) {
 		service.createUser(user);
-		System.out.println("id: " + user.getId() + ", username: " + user.getUsername());
-		return "redirect:/users/view?id=" + user.getId();
-		// return VN_REG_OK;
+		return "redirect:/users/viewUser?id=" + user.getId();
 	}
 
-	@RequestMapping(value = "view")
+	@RequestMapping(value = "viewUser")
 	public String viewUser(@RequestParam Long id, Model model) {
 		System.out.println("id: " + id);
 		model.addAttribute("user", service.getUser(id));
 		return "users/viewUser";
 	}
 
-	@RequestMapping(value = "list")
+	@RequestMapping(value = "listUsers")
 	public String getAllUsers(Model model) {
 		List<User> userList = service.getAllUsers();
 		logger.debug("num user: " + userList.size());
 		model.addAttribute("userList", userList);
 		return "users/listAllUsers";
+	}
+
+	@RequestMapping(value = "createGroupForm", method = RequestMethod.GET)
+	public String createGroupForm(Model model) {
+		model.addAttribute(new UserGroup());
+		return "users/createGroupForm";
+	}
+
+	@RequestMapping(value = "createGroup", method = RequestMethod.POST)
+	public String createUserGroup(@ModelAttribute UserGroup userGroup) {
+		List<User> userList = service.getAllUsers();
+		List<UserGroupItem> itemList = new ArrayList<UserGroupItem>(userList.size());
+		for (User user : userList) {
+			UserGroupItem item = new UserGroupItem();
+			item.setUser(user);
+			//item.setUserId(user.getId());
+			itemList.add(item);
+		}
+		userGroup.setItemList(itemList);
+		service.createUserGroup(userGroup);
+		return "redirect:/users/viewGroup?id=" + userGroup.getId();
+	}
+
+	@RequestMapping(value = "viewGroup", method = RequestMethod.GET)
+	public String viewUserGroup(@RequestParam Long id, Model model) {
+		model.addAttribute("group", service.getUserGroup(id));
+		return "users/viewGroup";
 	}
 }
