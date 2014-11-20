@@ -100,6 +100,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<UserGroup> getAllUserGroups() {
+		//List<UserGroup> groupList = sqlSession.selectList(mapperNs + ".getAllUserGroups", "g.id, u.id");
 		List<UserGroup> groupList = sqlSession.selectList(mapperNs + ".getAllUserGroups");
 		return groupList;
 	}

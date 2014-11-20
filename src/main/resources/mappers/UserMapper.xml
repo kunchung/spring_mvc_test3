@@ -24,6 +24,9 @@
 		FROM user_group g, user_group_item i, user u
 		WHERE g.id=i.group_id AND i.user_id=u.id 
 		ORDER BY g.id, u.id
+		<!-- 
+		ORDER BY $sortOrder$
+		-->
 	</select>
 
 	<select id="getAllUsers" resultMap="userMap">
@@ -41,15 +44,15 @@
 			AND g.id = #{id};
 	</select>
 
-	<resultMap id="userMap" type="net.kc.spring.user.domain.User">
+	<resultMap id="userMap" type="User">
 		<id property="id" column="id" />
 		<result property="username" column="username" />
 	</resultMap>
 
-	<resultMap id="userGroupMap" type="net.kc.spring.user.domain.UserGroup">
+	<resultMap id="userGroupMap" type="UserGroup">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
-		<collection property="itemList" ofType="net.kc.spring.user.domain.UserGroupItem">
+		<collection property="itemList" ofType="UserGroupItem">
 			<id property="id" column="user_group_item_id" />
 			<result property="groupId" column="id" />
 			<association property="user" column="user_id" resultMap="userMap"/>
