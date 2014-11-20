@@ -5,11 +5,19 @@
 
 <html>
 <body>
-	Group information
+	Group Information
+	<br>
 	<br> Id:
 	<c:out value="${group.id}" />
 	<br> Name:
 	<c:out value="${group.name}" />
+	<br>
+	User list:<br>
+	<c:forEach var="item" items="${group.itemList}">
+		<c:out value="${item.user.username}" />
+		<br>
+	</c:forEach>
+	<br>
 	<br>
 	<a href="${createGroupUrl}">Create Group</a>
 </body>

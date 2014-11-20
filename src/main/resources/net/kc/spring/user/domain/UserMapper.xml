@@ -3,35 +3,39 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.kc.spring.user.domain.UserMapper">
-	<select id="getUserGroup" resultType="net.kc.spring.user.domain.UserGroup">
-		select * from user_group
-		where id = #{id}
-	</select>
 	<!-- <insert id="insertUserGroup2" parameterType="net.kc.spring.user.domain.UserGroup" 
 		keyProperty="id" useGeneratedKeys="true"> insert into user_group (id, name) 
 		values (#{id}, #{name}) </insert> -->
-	<insert id="insertUserGroupItem" parameterType="net.kc.spring.user.domain.UserGroupItem"
-		keyProperty="id" useGeneratedKeys="true">
-		insert into user_group_item
-		(group_id, user_id) values (#{groupId}, #{user.id})
+
+	<insert id="insertUserGroupItem" parameterType="net.kc.spring.user.domain.UserGroupItem" keyProperty="id" useGeneratedKeys="true">
+		insert into user_group_item (group_id, user_id) values (#{groupId}, #{user.id})
 	</insert>
-	<insert id="insertUserGroupItem2" parameterType="hashmap"
-		keyProperty="id" useGeneratedKeys="true">
-		insert into user_group_item
-		(group_id, user_id) values (#{groupId}, #{userId})
+
+	<insert id="insertUserGroupItem2" parameterType="hashmap" keyProperty="id" useGeneratedKeys="true">
+		insert into user_group_item (group_id, user_id) values (#{groupId}, #{userId})
 	</insert>
-	<resultMap id="userGroupMap" type="net.kc.spring.user.domain.UesrGroup">
-		<id column="id" />
+
+	<select id="getUserGroup" resultMap="userGroupMap">
+		SELECT g.id, 
+			g.name, 
+			i.id as user_group_item_id, 
+			i.user_id, 
+			u.username
+		FROM user_group g, user_group_item i, user u
+		WHERE g.id=i.group_id AND i.user_id=u.id 
+			AND g.id=106;
+	</select>
+
+	<resultMap id="userGroupMap" type="net.kc.spring.user.domain.UserGroup">
+		<id property="id" column="id" />
 		<result property="name" column="name" />
-		<association property="user" javaType="net.kc.spring.user.domain.User">
-			<id property="id" column="id" />
-			<result property="username" column="username" />
-		</association>
-		<collection property="itemList"
-			ofType="net.kc.spring.user.domain.UserGroupItem">
-			<id property="id" column="id" />
-			<id property="groupId" column="group_id" />
-			<association property="user" javaType="net.kc.spring.user.domain.User" />
+		<collection property="itemList" ofType="net.kc.spring.user.domain.UserGroupItem">
+			<id property="id" column="user_group_item_id" />
+			<result property="groupId" column="id" />
+			<association property="user" javaType="net.kc.spring.user.domain.User">
+				<id property="id" column="user_id" />
+				<result property="username" column="username" />
+			</association>
 		</collection>
 	</resultMap>
 </mapper>

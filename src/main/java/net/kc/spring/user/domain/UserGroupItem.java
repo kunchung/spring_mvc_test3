@@ -38,4 +38,7 @@ public class UserGroupItem {
 		this.user = user;
 	}
 
+	public String toString() {
+		return "id: " + id + ", groupId: " + groupId + ", userId: " + user.getId();
+	}
 }

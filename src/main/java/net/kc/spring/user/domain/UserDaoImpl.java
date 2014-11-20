@@ -47,6 +47,12 @@ public class UserDaoImpl implements UserDao {
 	public UserGroup getUserGroup(Long id) {
 		UserGroup group = (UserGroup) sqlSession.selectOne(mapperNs + ".getUserGroup", id);
 		logger.debug("group: " + group);
+		List<UserGroupItem> itemList = group.getItemList();
+		logger.debug("num users: " + itemList.size());
+		for (UserGroupItem item : itemList) {
+			logger.debug("groupItem: " + item);
+			//logger.debug("userId: " + item.getUser().getId());
+		}
 		return group;
 	}
 
