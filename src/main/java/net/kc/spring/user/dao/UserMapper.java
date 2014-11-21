@@ -1,6 +1,10 @@
-package net.kc.spring.user.domain;
+package net.kc.spring.user.dao;
 
 import java.util.List;
+
+import net.kc.spring.user.domain.User;
+import net.kc.spring.user.domain.UserGroup;
+import net.kc.spring.user.domain.UserGroupItem;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;

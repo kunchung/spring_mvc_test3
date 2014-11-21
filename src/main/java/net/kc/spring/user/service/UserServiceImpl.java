@@ -1,19 +1,37 @@
-package net.kc.spring.user.domain;
+package net.kc.spring.user.service;
 
 import java.util.List;
+
+import net.kc.spring.user.dao.UserDaoImpl;
+import net.kc.spring.user.domain.User;
+import net.kc.spring.user.domain.UserGroup;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+//@Component
+//@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDaoImpl dao;
 
+	public UserDaoImpl getDao() {
+		return dao;
+	}
+
+	public void setDao(UserDaoImpl dao) {
+		this.dao = dao;
+	}
+
 	@Override
 	public Long createUser(User user) {
-		return dao.createUser(user);
+		Long userId = dao.createUser(user);
+//		if (true) {
+//			throw new RuntimeException();
+//		}
+		return userId;
 	}
 
 	@Override

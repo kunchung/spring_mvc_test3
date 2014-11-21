@@ -1,19 +1,27 @@
-package net.kc.spring.user.domain;
+package net.kc.spring.user.dao;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.kc.spring.user.domain.User;
+import net.kc.spring.user.domain.UserGroup;
+import net.kc.spring.user.domain.UserGroupItem;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-@Repository
-public class UserDaoImpl implements UserDao {
-	private static final String mapperNs = "net.kc.spring.user.domain.UserMapper";
+//@Repository
+public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
+	private static final String mapperNs = "net.kc.spring.user.dao.UserMapper";
 	private static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
+	
+	//@Autowired
+	//private JdbcTemplate template;
+
 	@Autowired
 	private SqlSession sqlSession;
 
@@ -22,6 +30,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public Long createUser(User user) {
+		//getJdbcTemplate();
 		mapper.insertUser(user);
 		return user.getId();
 	}

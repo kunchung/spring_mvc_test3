@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<!-- -->
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
 
@@ -25,6 +26,9 @@
 	<context:property-placeholder location="classpath:jdbc.properties" />
 
 	<context:component-scan base-package="net.kc.spring" />
+	<context:annotation-config />
+
+	<tx:annotation-driven transaction-manager="txManager" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/jsp directory -->
@@ -47,36 +51,54 @@
 		<property name="password" value="${jdbc.password}" />
 	</bean>
 
-	<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 
-		<property name="dataSource" ref="dataSource" /> <property name="hibernateProperties"> 
-		<props> <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect 
-		</prop> <prop key="hibernate.show_sql">true</prop> </props> 
-		</property> </bean> -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="userDao" class="net.kc.spring.user.dao.UserDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath:mappers/**/*.xml" />
-		<!--
-		<property name="typeAliases" value="net.kc.spring.user.domain.User,net.kc.spring.user.domain.UserGroup"/>
-		-->
-		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+		<!-- <property name="typeAliases" value="net.kc.spring.user.domain.User,net.kc.spring.user.domain.UserGroup"/> -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
 	</bean>
-	
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
+
+	<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 
+		<property name="dataSource" ref="dataSource" /> <property name="hibernateProperties"> 
+		<props> <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect </prop> 
+		<prop key="hibernate.show_sql">true</prop> </props> </property> </bean> -->
 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 
 	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="net.kc.spring.user.domain.UserMapper" />
+		<property name="mapperInterface" value="net.kc.spring.user.dao.UserMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
-	<!-- <bean id="userDao" class="net.kc.spring.user.domain.UserDaoImpl"> 
-		<property name="sqlSession" ref="sqlSession" /> </bean> -->
+	<!-- <bean id="userDao" class="net.kc.spring.user.domain.UserDaoImpl"> <property 
+		name="sqlSession" ref="sqlSession" /> </bean> -->
 
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="create*" propagation="REQUIRED" isolation="READ_COMMITTED" />
+			<tx:method name="*" propagation="REQUIRED" isolation="READ_COMMITTED"
+				read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="serviceMethod"
+			expression="execution(* net.kc.spring.user.service.UserService.*(..))" />
+		<aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice" />
+	</aop:config>
 </beans>

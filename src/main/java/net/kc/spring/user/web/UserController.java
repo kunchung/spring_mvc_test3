@@ -6,7 +6,7 @@ import java.util.List;
 import net.kc.spring.user.domain.User;
 import net.kc.spring.user.domain.UserGroup;
 import net.kc.spring.user.domain.UserGroupItem;
-import net.kc.spring.user.domain.UserService;
+import net.kc.spring.user.service.UserService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

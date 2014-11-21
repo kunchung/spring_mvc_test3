@@ -1,6 +1,9 @@
-package net.kc.spring.user.domain;
+package net.kc.spring.user.service;
 
 import java.util.List;
+
+import net.kc.spring.user.domain.User;
+import net.kc.spring.user.domain.UserGroup;
 
 public interface UserService {
 
