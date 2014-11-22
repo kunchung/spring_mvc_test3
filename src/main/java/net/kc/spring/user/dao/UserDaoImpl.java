@@ -12,10 +12,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Repository;
 
-//@Repository
-public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
+@Repository
+public class UserDaoImpl implements UserDao {
+//public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 	private static final String mapperNs = "net.kc.spring.user.dao.UserMapper";
 	private static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 	

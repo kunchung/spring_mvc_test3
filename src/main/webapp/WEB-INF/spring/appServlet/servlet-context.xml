@@ -26,7 +26,9 @@
 	<context:property-placeholder location="classpath:jdbc.properties" />
 
 	<context:component-scan base-package="net.kc.spring" />
+	<!--
 	<context:annotation-config />
+	-->
 
 	<tx:annotation-driven transaction-manager="txManager" />
 
@@ -55,9 +57,11 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
+<!--
 	<bean id="userDao" class="net.kc.spring.user.dao.UserDaoImpl">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
+-->
 
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -96,9 +100,11 @@
 		</tx:attributes>
 	</tx:advice>
 
+<!--
 	<aop:config>
 		<aop:pointcut id="serviceMethod"
 			expression="execution(* net.kc.spring.user.service.UserService.*(..))" />
 		<aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice" />
 	</aop:config>
+-->
 </beans>
