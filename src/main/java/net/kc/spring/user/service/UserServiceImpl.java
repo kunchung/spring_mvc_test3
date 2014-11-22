@@ -19,6 +19,9 @@ import org.springframework.transaction.support.TransactionTemplate;
 //@Transactional
 @Service
 public class UserServiceImpl implements UserService {
+	private boolean testRollback = true;
+
+	@SuppressWarnings("unused")
 	private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Autowired
@@ -42,9 +45,9 @@ public class UserServiceImpl implements UserService {
 
 	private Long createUser1(User user) {
 		Long userId = dao.createUser(user);
-		//		if (true) {
-		//			throw new RuntimeException();
-		//		}
+		if (testRollback) {
+			throw new RuntimeException();
+		}
 		return userId;
 	}
 
@@ -59,12 +62,14 @@ public class UserServiceImpl implements UserService {
 			public Long doInTransaction(TransactionStatus status) {
 				try {
 					Long userId = dao.createUser(user);
-					if (true) {
+					if (testRollback) {
 						throw new RuntimeException();
 					}
 					return userId;
 				} catch (Exception e) {
+					//cause the transaction to rollback
 					status.setRollbackOnly();
+					user.setId(0L);
 					return 0L;
 				}
 			}
