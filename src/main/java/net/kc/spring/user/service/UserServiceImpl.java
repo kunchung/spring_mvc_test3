@@ -32,14 +32,14 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PlatformTransactionManager txManager;
 
-	public UserDaoImpl getDao() {
-		return dao;
+	public void saveUser(User user) {
+		dao.saveUser(user);
+//		if (dao.getUser(user.getUsername()) != null) {
+//		} else {
+//			dao.saveUser(user);
+//		}
 	}
-
-	public void setDao(UserDaoImpl dao) {
-		this.dao = dao;
-	}
-
+	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
 	public Long createUser(User user) {
@@ -57,6 +57,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * Create User using TransactionTemplate.
 	 */
+	@SuppressWarnings("unused")
 	private Long createUser2(final User user) {
 		TransactionTemplate template = TransactionTemplateUtils.getDefaultTransactionTemplate(txManager);
 		return template.execute(new TransactionCallback<Long>() {
@@ -87,8 +88,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> findUsers(String username) {
-		return dao.findUsers(username);
+	public User getUser(String username) {
+		return dao.getUser(username);
 	}
 
 	@Override

@@ -6,11 +6,15 @@ import net.kc.spring.user.domain.User;
 import net.kc.spring.user.domain.UserGroup;
 
 public interface UserDao {
+	public void saveUser(User user);
+
 	public Long createUser(User user);
+
+	public void updateUser(User user);
 
 	public User getUser(Long id);
 
-	public List<User> findUsers(String username);
+	public User getUser(String username);
 
 	public List<User> getAllusers();
 	

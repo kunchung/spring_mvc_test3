@@ -1,6 +1,5 @@
 package net.kc.spring.user.service;
 
-import java.io.File;
 import java.util.List;
 
 import net.kc.spring.user.domain.User;
@@ -22,6 +21,24 @@ public class UserServiceTest {
 	}
 
 	@Test
+	public void testSaveUser() {
+		UserService service = (UserService) ctx.getBean(UserService.class);
+		User user = new User();
+		user.setId(5L);
+		user.setUsername("user4");
+		user.setName("user 4");
+		service.saveUser(user);
+	}
+	
+	//@Test
+	public void testGetUser() {
+		UserService userService = (UserService) ctx.getBean(UserService.class);
+		String username = "user1";
+		User user = userService.getUser(username);
+		System.out.println("User: " + user);
+	}
+
+	//@Test
 	public void testCreateUser() {
 		UserService userService = (UserService) ctx.getBean(UserService.class);
 		User user = new User();

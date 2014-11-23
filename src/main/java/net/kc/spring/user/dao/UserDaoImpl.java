@@ -1,5 +1,6 @@
 package net.kc.spring.user.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +17,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-//public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
+	//public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 	private static final String mapperNs = "net.kc.spring.user.dao.UserMapper";
 	private static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
-	
+
 	//@Autowired
 	//private JdbcTemplate template;
 
@@ -30,10 +31,26 @@ public class UserDaoImpl implements UserDao {
 	private UserMapper mapper;
 
 	@Override
+	public void saveUser(User user) {
+		if (user.getId() == null) {
+			createUser(user);
+		} else {
+			updateUser(user);
+		}
+	}
+
+	@Override
 	public Long createUser(User user) {
 		//getJdbcTemplate();
+		user.setCreateDate(new Date());
 		mapper.insertUser(user);
 		return user.getId();
+	}
+
+	@Override
+	public void updateUser(User user) {
+		user.setUpdateDate(new Date());
+		mapper.updateUser(user);
 	}
 
 	@Override
@@ -42,10 +59,9 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<User> findUsers(String username) {
-		// UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-		return mapper.findUsers(username);
-		// return sqlSession.selectList(mapperNs + ".findUsers");
+	public User getUser(String username) {
+		//return sqlSession.selectOne(mapperNs + ".getUserByUsername", username);
+		return mapper.getUserByUsername(username);
 	}
 
 	@Override

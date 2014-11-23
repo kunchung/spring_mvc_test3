@@ -7,11 +7,13 @@ import net.kc.spring.user.domain.UserGroup;
 
 public interface UserService {
 
+	public void saveUser(User user);
+	
 	public Long createUser(User user);
 
 	public User getUser(Long id);
 
-	public List<User> findUsers(String username);
+	public User getUser(String username);
 	
 	public List<User> getAllUsers();
 	

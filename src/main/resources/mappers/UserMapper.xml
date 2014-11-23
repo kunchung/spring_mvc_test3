@@ -15,6 +15,12 @@
 		insert into user_group_item (group_id, user_id) values (#{groupId}, #{userId})
 	</insert>
 
+<!--
+	<select id="getUserByUsername" parameterType="string" resultMap="userGroupMap">
+		SELECT * FROM user WHERE username=#{username}
+	</select>
+-->
+
 	<select id="getAllUserGroups" resultMap="userGroupMap">
 		SELECT g.id, 
 			g.name, 

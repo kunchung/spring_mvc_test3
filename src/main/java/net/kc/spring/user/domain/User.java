@@ -1,40 +1,43 @@
 package net.kc.spring.user.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import net.kc.spring.common.BaseEntity;
 
-@Entity
-@Table(name = "user")
-public class User {
+//@Entity
+//@Table(name = "user")
+public class User extends BaseEntity {
 
-	private Long id;
-	private String username;
+	private String name;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	public Long getId() {
-		return id;
-	}
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Column(name = "id")
+//	public Long getId() {
+//		return id;
+//	}
+//
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@Column(name = "username")
+//	@Column(name = "username")
 	public String getUsername() {
-		return username;
+		return getNumber();
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.setNumber(username);
+		//this.username = username;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String toString() {
-		return "id: " + getId() + ", username: " + getUsername();
+		return "id: " + getId() + ", username: " + getUsername() + ", name: " + getName();
 	}
 }

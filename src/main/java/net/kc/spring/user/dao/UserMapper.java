@@ -1,7 +1,5 @@
 package net.kc.spring.user.dao;
 
-import java.util.List;
-
 import net.kc.spring.user.domain.User;
 import net.kc.spring.user.domain.UserGroup;
 import net.kc.spring.user.domain.UserGroupItem;
@@ -9,18 +7,22 @@ import net.kc.spring.user.domain.UserGroupItem;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 public interface UserMapper {
 
 	@Select("select * from user where id = #{id}")
 	public User getUser(Long id);
 
-	@Insert("insert into user values (#{id}, #{username})")
+	@Select("select * from user where username=#{username}")
+	public User getUserByUsername(String username);
+
+	@Insert("insert into user values (#{id}, #{username}, #{name}, #{createDate}, #{updateDate})")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	public void insertUser(User user);
-
-	@Select("select * from user where username like '%#{username}%'")
-	public List<User> findUsers(String username);
+	
+	@Update("update user set name=#{name}, create_date=#{createDate}, update_date=#{updateDate} where id=#{id}")
+	public void updateUser(User user);
 
 	//@Select("select * from user order by id")
 	//public List<User> getAllUsers();
