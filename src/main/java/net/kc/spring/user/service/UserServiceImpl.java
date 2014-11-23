@@ -13,13 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-//@Transactional
 @Service
 public class UserServiceImpl implements UserService {
-	private boolean testRollback = true;
+	private boolean testRollback = false;
 
 	@SuppressWarnings("unused")
 	private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -39,8 +41,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
 	public Long createUser(User user) {
-		return createUser2(user);
+		return createUser1(user);
 	}
 
 	private Long createUser1(User user) {
@@ -67,8 +70,9 @@ public class UserServiceImpl implements UserService {
 					}
 					return userId;
 				} catch (Exception e) {
-					//cause the transaction to rollback
+					//MUST invoke status.setRollbackOnly to cause the transaction to rollback
 					status.setRollbackOnly();
+					System.out.println("rollback!");
 					user.setId(0L);
 					return 0L;
 				}
@@ -77,6 +81,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public User getUser(Long id) {
 		return dao.getUser(id);
 	}

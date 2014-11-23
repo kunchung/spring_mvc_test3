@@ -92,6 +92,7 @@
 	<!-- <bean id="userDao" class="net.kc.spring.user.domain.UserDaoImpl"> <property 
 		name="sqlSession" ref="sqlSession" /> </bean> -->
 
+<!--
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
 			<tx:method name="create*" propagation="REQUIRED" isolation="READ_COMMITTED" />
@@ -100,7 +101,6 @@
 		</tx:attributes>
 	</tx:advice>
 
-<!--
 	<aop:config>
 		<aop:pointcut id="serviceMethod"
 			expression="execution(* net.kc.spring.user.service.UserService.*(..))" />
