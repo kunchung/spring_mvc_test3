@@ -2,12 +2,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<c:url var="createUserUrl" value="/users/createUser" />
-<spring:message var="create" code="user.create" />
+<c:url var="updateUserUrl" value="/users/updateUser" />
+<spring:message var="update" code="user.update" />
 
 <html>
 <body>
-	<form:form action="${createUserUrl}" modelAttribute="user">
+	<form:form action="${updateUserUrl}" modelAttribute="user">
+		<form:hidden path="id" />
 		<table>
 			<tr>
 				<td><spring:message code="user.username" /></td>
@@ -20,7 +21,7 @@
 				<td><form:errors path="name" /></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="${register}" /></td>
+				<td colspan="2"><input type="submit" value="${update}" /></td>
 			</tr>
 		</table>
 		<br>

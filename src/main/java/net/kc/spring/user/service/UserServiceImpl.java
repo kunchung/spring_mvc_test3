@@ -34,12 +34,12 @@ public class UserServiceImpl implements UserService {
 
 	public void saveUser(User user) {
 		dao.saveUser(user);
-//		if (dao.getUser(user.getUsername()) != null) {
-//		} else {
-//			dao.saveUser(user);
-//		}
+		//		if (dao.getUser(user.getUsername()) != null) {
+		//		} else {
+		//			dao.saveUser(user);
+		//		}
 	}
-	
+
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
 	public Long createUser(User user) {
