@@ -55,7 +55,9 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User getUser(Long userId) {
-		return mapper.getUser(userId);
+		User user= sqlSession.selectOne(mapperNs + ".getUser", userId);
+		logger.debug("user: " + user);
+		return user;
 	}
 
 	@Override

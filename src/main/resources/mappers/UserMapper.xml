@@ -26,13 +26,20 @@
 			g.name, 
 			i.id as user_group_item_id, 
 			i.user_id, 
-			u.username
+			u.username,
+			u.name,
+			u.create_date,
+			u.update_date
 		FROM user_group g, user_group_item i, user u
 		WHERE g.id=i.group_id AND i.user_id=u.id 
 		ORDER BY g.id, u.id
 		<!-- 
 		ORDER BY $sortOrder$
 		-->
+	</select>
+
+	<select id="getUser" resultMap="userMap">
+		select * from user where id = #{id}
 	</select>
 
 	<select id="getAllUsers" resultMap="userMap">
@@ -44,7 +51,10 @@
 			g.name, 
 			i.id as user_group_item_id, 
 			i.user_id, 
-			u.username
+			u.username,
+			u.name,
+			u.create_date,
+			u.update_date
 		FROM user_group g, user_group_item i, user u
 		WHERE g.id=i.group_id AND i.user_id=u.id 
 			AND g.id = #{id};
@@ -53,6 +63,9 @@
 	<resultMap id="userMap" type="User">
 		<id property="id" column="id" />
 		<result property="username" column="username" />
+		<result property="name" column="name" />
+		<result property="createDate" column="create_date" />
+		<result property="updateDate" column="update_date" />
 	</resultMap>
 
 	<resultMap id="userGroupMap" type="UserGroup">

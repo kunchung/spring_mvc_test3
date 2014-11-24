@@ -11,8 +11,8 @@ import org.apache.ibatis.annotations.Update;
 
 public interface UserMapper {
 
-	@Select("select * from user where id = #{id}")
-	public User getUser(Long id);
+	//@Select("select * from user where id = #{id}")
+	//public User getUser(Long id);
 
 	@Select("select * from user where username=#{username}")
 	public User getUserByUsername(String username);

@@ -41,6 +41,6 @@ public class User extends BaseEntity {
 	}
 
 	public String toString() {
-		return "id: " + getId() + ", username: " + getUsername() + ", name: " + getName();
+		return "id: " + getId() + ", username: " + getUsername() + ", name: " + getName() + ", createDate: " + getCreateDate() + ", updateDate: " + getUpdateDate();
 	}
 }
