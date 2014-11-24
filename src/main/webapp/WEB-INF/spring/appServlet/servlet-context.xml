@@ -81,10 +81,17 @@
 	-->
 	
 	<!-- Conversion  -->
-	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<set>
 				<bean class="net.kc.spring.common.StringToDateConverter">
+					<constructor-arg type="java.lang.String" value="yyyy-MM-dd"/>
+				</bean>
+			</set>
+		</property>
+		<property name="formatters">
+			<set>
+				<bean class="net.kc.spring.common.DateFormatter">
 					<constructor-arg type="java.lang.String" value="yyyy-MM-dd"/>
 				</bean>
 			</set>
