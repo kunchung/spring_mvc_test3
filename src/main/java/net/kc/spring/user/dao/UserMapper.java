@@ -17,7 +17,7 @@ public interface UserMapper {
 	@Select("select * from user where username=#{username}")
 	public User getUserByUsername(String username);
 
-	@Insert("insert into user values (#{id}, #{username}, #{name}, #{createDate}, #{updateDate})")
+	@Insert("insert into user values (#{id}, #{username}, #{name}, #{birthdate}, #{createDate}, #{updateDate})")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	public void insertUser(User user);
 	
