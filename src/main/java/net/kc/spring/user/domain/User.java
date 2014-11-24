@@ -1,5 +1,7 @@
 package net.kc.spring.user.domain;
 
+import java.util.Date;
+
 import javax.validation.constraints.Size;
 
 import net.kc.spring.common.BaseEntity;
@@ -10,6 +12,8 @@ public class User extends BaseEntity {
 
 	@Size(min = 1, max = 30)
 	private String name;
+
+	private Date birthdate;
 
 	//	@Id
 	//	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,6 +42,14 @@ public class User extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Date getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
 	}
 
 	public String toString() {

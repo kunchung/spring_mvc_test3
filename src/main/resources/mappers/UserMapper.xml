@@ -28,6 +28,7 @@
 			i.user_id, 
 			u.username,
 			u.name,
+			u.birthdate,
 			u.create_date,
 			u.update_date
 		FROM user_group g, user_group_item i, user u
@@ -53,6 +54,7 @@
 			i.user_id, 
 			u.username,
 			u.name,
+			u.birthdate,
 			u.create_date,
 			u.update_date
 		FROM user_group g, user_group_item i, user u
@@ -64,6 +66,7 @@
 		<id property="id" column="id" />
 		<result property="username" column="username" />
 		<result property="name" column="name" />
+		<result property="birthdate" column="birthdate" />
 		<result property="createDate" column="create_date" />
 		<result property="updateDate" column="update_date" />
 	</resultMap>

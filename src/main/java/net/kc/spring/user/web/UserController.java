@@ -13,6 +13,7 @@ import net.kc.spring.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,9 @@ public class UserController {
 
 	@Autowired
 	private UserService service;
+
+	@Autowired
+	private ConversionService conversionService;
 
 	private static final String CREATE_FORM = "users/createUserForm";
 	private static final String UPDATE_FORM = "users/updateUserForm";

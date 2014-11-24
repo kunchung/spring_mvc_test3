@@ -9,12 +9,13 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- -->
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
 
 	<!-- Enables the Spring MVC @Controller programming model -->
+	<!--
 	<mvc:annotation-driven />
+	-->
 
 	<!-- <mvc:view-controller path="/users/reg_success" view-name="users/regSuccess" 
 		/> -->
@@ -30,8 +31,6 @@
 	<context:annotation-config />
 	-->
 
-	<tx:annotation-driven transaction-manager="txManager" />
-
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/jsp directory -->
 	<bean
@@ -40,6 +39,7 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<!-- Messages  -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
@@ -49,16 +49,28 @@
 			</list>
 		</property>
 	</bean>
+	<!--
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+		p:basename="classpath:/spring/messages" />
+	-->
 		
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="en" />
 	</bean>
 
-	<bean id="localeChangeInterceptor"
-		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-		<property name="paramName" value="language" />
-	</bean>
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="locale" />
+		</bean>
+	</mvc:interceptors>
 	
+	<!-- The following configuration does not work, reason unknown  -->
+	<!--
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="locale" />
+	</bean>
+
 	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >
 		<property name="interceptors">
 		   <list>
@@ -66,13 +78,23 @@
 		   </list>
 		</property>
 	</bean>
-	
-	<!--
-	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
-		p:basename="classpath:/spring/messages" />
 	-->
+	
+	<!-- Conversion  -->
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="net.kc.spring.common.StringToDateConverter">
+					<constructor-arg type="java.lang.String" value="yyyy-MM-dd"/>
+				</bean>
+			</set>
+		</property>
+	</bean>
+	
+	<mvc:annotation-driven conversion-service="conversionService"/>
 
+	<!-- Database  -->
+	<tx:annotation-driven transaction-manager="txManager" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -86,11 +108,11 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-<!--
+	<!--
 	<bean id="userDao" class="net.kc.spring.user.dao.UserDaoImpl">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
--->
+	-->
 
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

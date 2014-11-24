@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -20,6 +21,11 @@ Edit User<br><br>
 				<td><spring:message code="user.name" /></td>
 				<td><form:input path="name" /></td>
 				<td><form:errors path="name" /></td>
+			</tr>
+			<tr>
+				<td><spring:message code="user.birthdate" /></td>
+				<td><form:input path="birthdate" /></td>
+				<td><form:errors path="birthdate" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="${update}" /></td>

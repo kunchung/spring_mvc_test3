@@ -21,7 +21,7 @@ public interface UserMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	public void insertUser(User user);
 	
-	@Update("update user set name=#{name}, create_date=#{createDate}, update_date=#{updateDate} where id=#{id}")
+	@Update("update user set name=#{name}, birthdate=#{birthdate}, create_date=#{createDate}, update_date=#{updateDate} where id=#{id}")
 	public void updateUser(User user);
 
 	//@Select("select * from user order by id")

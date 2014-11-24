@@ -1,0 +1,13 @@
+general.createDate = 創建日期
+general.updateDate = 更新日期
+
+general.create = 創建
+general.update = 更新
+
+user.id	= 編號
+user.username = 用戶名稱
+user.password = 密碼
+user.name = 姓名
+
+userGroup.name = 組別名稱
+userGroup.createGroup = 創建組別
