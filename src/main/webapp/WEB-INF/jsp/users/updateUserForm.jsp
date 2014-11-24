@@ -3,10 +3,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:url var="updateUserUrl" value="/users/updateUser" />
-<spring:message var="update" code="user.update" />
+<spring:message var="update" code="general.update" />
 
 <html>
 <body>
+Edit User<br><br>
 	<form:form action="${updateUserUrl}" modelAttribute="user">
 		<form:hidden path="id" />
 		<table>

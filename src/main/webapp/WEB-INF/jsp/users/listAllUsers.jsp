@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <body>
+	<p>Current Locale : ${pageContext.response.locale}</p>
 	<table border="1">
 		<tr>
 			<td>Id</td>

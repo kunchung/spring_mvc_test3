@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<c:url var="home" value="/home" />
+<c:url var="home" value="/" />
 <c:url var="createUserUrl" value="/users/createUserForm" />
 <c:url var="listUsersUrl" value="/users/listUsers" />
 <html>

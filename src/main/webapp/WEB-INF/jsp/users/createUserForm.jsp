@@ -3,10 +3,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:url var="createUserUrl" value="/users/createUser" />
-<spring:message var="create" code="user.create" />
+<spring:message var="create" code="general.create" />
 
 <html>
 <body>
+Create User<br>
 	<form:form action="${createUserUrl}" modelAttribute="user">
 		<table>
 			<tr>
@@ -20,7 +21,7 @@
 				<td><form:errors path="name" /></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="${register}" /></td>
+				<td colspan="2"><input type="submit" value="${create}" /></td>
 			</tr>
 		</table>
 		<br>

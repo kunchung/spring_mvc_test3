@@ -22,9 +22,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 @RequestMapping(value = "users")
+// with @SessionAttributes annotation, "user" is updated by the data from HTTP parameters when controller method with the corresponding model attribute in its signature is invoked.  
+@SessionAttributes({ "user" })
 public class UserController {
 
 	@Autowired
@@ -32,8 +36,6 @@ public class UserController {
 
 	private static final String CREATE_FORM = "users/createUserForm";
 	private static final String UPDATE_FORM = "users/updateUserForm";
-	// private static final String VN_REG_OK = "redirect:/users/reg_success";
-	// private static final String VN_REG_OK = "users/registrationOk";
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -44,7 +46,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "createUser", method = RequestMethod.POST)
-	public String createUser(@Valid @ModelAttribute User user, BindingResult bindingResult, Errors errors) {
+	public String createUser(@Valid @ModelAttribute User user,
+			BindingResult bindingResult, Errors errors) {
 		if (bindingResult.hasErrors()) {
 			for (FieldError fe : bindingResult.getFieldErrors()) {
 				logger.info("code: " + fe.getCode() + ", field: " + fe.getField() + ", " + fe.getDefaultMessage());
@@ -68,9 +71,9 @@ public class UserController {
 		model.addAttribute(user);
 		return UPDATE_FORM;
 	}
-	
+
 	@RequestMapping(value = "updateUser", method = RequestMethod.POST)
-	public String updateUser(@Valid @ModelAttribute User user, BindingResult bindingResult, Errors errors) {
+	public String updateUser(@Valid @ModelAttribute User user, BindingResult bindingResult, Errors errors, SessionStatus sessionStatus) {
 		if (bindingResult.hasErrors()) {
 			for (FieldError fe : bindingResult.getFieldErrors()) {
 				logger.info("code: " + fe.getCode() + ", field: " + fe.getField() + ", " + fe.getDefaultMessage());
@@ -79,8 +82,8 @@ public class UserController {
 		}
 
 		service.saveUser(user);
+		sessionStatus.setComplete();
 		return "redirect:/users/viewUser?id=" + user.getId();
-		
 	}
 
 	@RequestMapping(value = "viewUser")
@@ -107,8 +110,7 @@ public class UserController {
 	@RequestMapping(value = "createGroup", method = RequestMethod.POST)
 	public String createUserGroup(@ModelAttribute UserGroup userGroup) {
 		List<User> userList = service.getAllUsers();
-		List<UserGroupItem> itemList = new ArrayList<UserGroupItem>(
-				userList.size());
+		List<UserGroupItem> itemList = new ArrayList<UserGroupItem>(userList.size());
 		for (User user : userList) {
 			UserGroupItem item = new UserGroupItem();
 			item.setUser(user);
