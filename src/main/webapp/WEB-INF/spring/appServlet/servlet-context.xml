@@ -27,6 +27,8 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<bean id="userValidator" class="net.kc.spring.user.domain.UserValidator"/>
+
 	<!-- Messages  -->
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">

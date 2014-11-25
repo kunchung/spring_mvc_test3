@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,6 +41,9 @@ public class UserController {
 
 	@Autowired
 	private ConversionService conversionService;
+	
+	@Autowired
+	private UserValidator userValidator;
 
 	private static final String CREATE_FORM = "users/createUserForm";
 	private static final String UPDATE_FORM = "users/updateUserForm";
@@ -51,7 +55,7 @@ public class UserController {
 	public void initBinder(WebDataBinder binder) {
 		logger.debug("initBinder");
 		// this will apply the validator to all request-handling methods
-		binder.setValidator(new UserValidator());
+		binder.setValidator(userValidator);
 		binder.validate();
 	}
 
@@ -89,7 +93,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "updateUser", method = RequestMethod.POST)
-	public String updateUser(@Valid @ModelAttribute User user, BindingResult bindingResult, SessionStatus sessionStatus) {
+	public String updateUser(@Validated @ModelAttribute User user, BindingResult bindingResult, SessionStatus sessionStatus) {
 		if (bindingResult.hasErrors()) {
 			for (FieldError fe : bindingResult.getFieldErrors()) {
 				logger.info("code: " + fe.getCode() + ", field: " + fe.getField() + ", " + fe.getDefaultMessage());
