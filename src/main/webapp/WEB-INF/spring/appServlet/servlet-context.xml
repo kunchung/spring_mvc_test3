@@ -1,24 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing 
-		infrastructure -->
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
-	<!-- Enables the Spring MVC @Controller programming model -->
-	<!--
-	<mvc:annotation-driven />
-	-->
-
-	<!-- <mvc:view-controller path="/users/reg_success" view-name="users/regSuccess" 
-		/> -->
+	<!-- <mvc:view-controller path="/users/reg_success" view-name="users/regSuccess" /> -->
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
@@ -33,15 +22,13 @@
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/jsp directory -->
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 
 	<!-- Messages  -->
-	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
 				<value>classpath:properties/labels</value>
@@ -54,7 +41,7 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
 		p:basename="classpath:/spring/messages" />
 	-->
-		
+
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="en" />
 	</bean>
@@ -85,26 +72,26 @@
 		<property name="converters">
 			<set>
 				<bean class="net.kc.spring.common.StringToDateConverter">
-					<constructor-arg type="java.lang.String" value="yyyy-MM-dd"/>
+					<constructor-arg type="java.lang.String" value="yyyy-MM-dd" />
 				</bean>
 			</set>
 		</property>
 		<property name="formatters">
 			<set>
 				<bean class="net.kc.spring.common.DateFormatter">
-					<constructor-arg type="java.lang.String" value="yyyy-MM-dd"/>
+					<constructor-arg type="java.lang.String" value="yyyy-MM-dd" />
 				</bean>
 			</set>
 		</property>
 	</bean>
-	
-	<mvc:annotation-driven conversion-service="conversionService"/>
+
+	<!-- Enables the Spring MVC @Controller programming model and ConversionService -->
+	<mvc:annotation-driven conversion-service="conversionService" />
 
 	<!-- Database  -->
 	<tx:annotation-driven transaction-manager="txManager" />
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
@@ -121,8 +108,7 @@
 	</bean>
 	-->
 
-	<bean id="txManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
@@ -133,10 +119,17 @@
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 	</bean>
 
-	<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 
-		<property name="dataSource" ref="dataSource" /> <property name="hibernateProperties"> 
-		<props> <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect </prop> 
-		<prop key="hibernate.show_sql">true</prop> </props> </property> </bean> -->
+	<!-- 
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect </prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean> 
+	-->
 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
@@ -147,10 +140,13 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
-	<!-- <bean id="userDao" class="net.kc.spring.user.domain.UserDaoImpl"> <property 
-		name="sqlSession" ref="sqlSession" /> </bean> -->
+	<!-- 
+	<bean id="userDao" class="net.kc.spring.user.domain.UserDaoImpl">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean> 
+	-->
 
-<!--
+	<!--
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
 			<tx:method name="create*" propagation="REQUIRED" isolation="READ_COMMITTED" />
@@ -164,5 +160,5 @@
 			expression="execution(* net.kc.spring.user.service.UserService.*(..))" />
 		<aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice" />
 	</aop:config>
--->
+	-->
 </beans>

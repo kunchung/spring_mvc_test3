@@ -4,6 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:url var="updateUserUrl" value="/users/updateUser" />
+<c:url var="listUsersUrl" value="/users/listUsers" />
 <spring:message var="update" code="general.update" />
 
 <html>
@@ -33,5 +34,7 @@ Edit User<br><br>
 		</table>
 		<br>
 	</form:form>
+	<br>
+	<a href="${listUsersUrl}">List all users</a><br><br>
 </body>
 </html>

@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import net.kc.spring.user.domain.User;
 import net.kc.spring.user.domain.UserGroup;
 import net.kc.spring.user.domain.UserGroupItem;
+import net.kc.spring.user.domain.UserValidator;
 import net.kc.spring.user.service.UserService;
 
 import org.slf4j.Logger;
@@ -19,6 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +45,15 @@ public class UserController {
 	private static final String UPDATE_FORM = "users/updateUserForm";
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+	// If InitBinder is enabled, JSR 303 Validation will be disabled
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		logger.debug("initBinder");
+		// this will apply the validator to all request-handling methods
+		binder.setValidator(new UserValidator());
+		binder.validate();
+	}
 
 	@RequestMapping(value = "createUserForm", method = RequestMethod.GET)
 	public String createUserForm(Model model) {
@@ -77,7 +89,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "updateUser", method = RequestMethod.POST)
-	public String updateUser(@Valid @ModelAttribute User user, BindingResult bindingResult, Errors errors, SessionStatus sessionStatus) {
+	public String updateUser(@Valid @ModelAttribute User user, BindingResult bindingResult, SessionStatus sessionStatus) {
 		if (bindingResult.hasErrors()) {
 			for (FieldError fe : bindingResult.getFieldErrors()) {
 				logger.info("code: " + fe.getCode() + ", field: " + fe.getField() + ", " + fe.getDefaultMessage());
