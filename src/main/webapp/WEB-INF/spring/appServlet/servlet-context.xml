@@ -27,7 +27,7 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<bean id="userValidator" class="net.kc.spring.user.domain.UserValidator"/>
+	<bean id="userValidator" class="net.kc.spring.user.domain.UserValidator" />
 
 	<!-- Messages  -->
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -143,6 +143,14 @@
 	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="net.kc.spring.user.dao.UserMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id='sqlMapClient' class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name='configLocation' value="classpath:ibatis/sqlmap-config.xml" />
+		<!--
+        <property name='mappingLocations' value="classpath:ibatis/ibatis-mapping.xml"/>
+		-->
 	</bean>
 
 	<!-- 

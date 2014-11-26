@@ -1,0 +1,1 @@
+insert into product (id, number, name) values (101, 'P1', 'Product 1');
