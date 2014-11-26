@@ -66,7 +66,7 @@
 		<id property="id" column="id" />
 		<result property="username" column="username" />
 		<result property="name" column="name" />
-		<result property="birthdate" column="birthdate" />
+		<result property="dateOfBirth" column="birthdate" />
 		<result property="createDate" column="create_date" />
 		<result property="updateDate" column="update_date" />
 	</resultMap>

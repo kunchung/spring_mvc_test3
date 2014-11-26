@@ -17,11 +17,11 @@ public interface UserMapper {
 	@Select("select * from user where username=#{username}")
 	public User getUserByUsername(String username);
 
-	@Insert("insert into user values (#{id}, #{username}, #{name}, #{birthdate}, #{createDate}, #{updateDate})")
+	@Insert("insert into user values (#{id}, #{username}, #{name}, #{dateOfBirth}, #{createDate}, #{updateDate})")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	public void insertUser(User user);
 	
-	@Update("update user set name=#{name}, birthdate=#{birthdate}, create_date=#{createDate}, update_date=#{updateDate} where id=#{id}")
+	@Update("update user set name=#{name}, birthdate=#{dateOfBirth}, create_date=#{createDate}, update_date=#{updateDate} where id=#{id}")
 	public void updateUser(User user);
 
 	//@Select("select * from user order by id")

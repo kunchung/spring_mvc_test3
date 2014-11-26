@@ -19,9 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,8 +47,8 @@ public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	// use custom validator will disable the Validation annotation (e.g. @Size) in User object
-	@InitBinder
+	// By enable @InitBinder, custom validator will used, validation annotation used in binded object will have no use
+	//@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		logger.debug("initBinder");
 		// this will apply the validator to all request-handling methods

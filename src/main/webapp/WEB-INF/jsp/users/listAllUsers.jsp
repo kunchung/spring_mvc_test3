@@ -11,7 +11,7 @@
 			<td><spring:message code="user.id" /></td>
 			<td><spring:message code="user.username" /></td>
 			<td><spring:message code="user.name" /></td>
-			<td><spring:message code="user.birthdate" /></td>
+			<td><spring:message code="user.dateOfBirth" /></td>
 			<td><spring:message code="general.createDate" /></td>
 			<td><spring:message code="general.updateDate" /></td>
 		</tr>
@@ -23,7 +23,7 @@
 				</c:url>
 				<td><a href="${updateUserUrl}"><c:out value="${user.username}" /></a></td>
 				<td><c:out value="${user.name}" /></td>
-				<td><fmt:formatDate value="${user.birthdate}" pattern="yyyy-MM-dd" /></td>
+				<td><fmt:formatDate value="${user.dateOfBirth}" pattern="yyyy-MM-dd" /></td>
 				<td><fmt:formatDate value="${user.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 				<td><fmt:formatDate value="${user.updateDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 			</tr>

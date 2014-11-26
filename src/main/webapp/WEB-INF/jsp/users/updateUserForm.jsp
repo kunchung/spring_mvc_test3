@@ -16,7 +16,10 @@ Edit User<br><br>
 			<tr>
 				<td><spring:message code="user.username" /></td>
 				<td><form:input path="username" /></td>
-				<td><form:errors path="number" /></td>
+				<td>
+					<form:errors path="number" />
+					<form:errors path="username" />
+				</td>
 			</tr>
 			<tr>
 				<td><spring:message code="user.name" /></td>
@@ -24,9 +27,9 @@ Edit User<br><br>
 				<td><form:errors path="name" /></td>
 			</tr>
 			<tr>
-				<td><spring:message code="user.birthdate" /></td>
-				<td><form:input path="birthdate" /></td>
-				<td><form:errors path="birthdate" /></td>
+				<td><spring:message code="user.dateOfBirth" /></td>
+				<td><form:input path="dateOfBirth" /></td>
+				<td><form:errors path="dateOfBirth" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="${update}" /></td>

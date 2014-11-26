@@ -10,10 +10,10 @@ import net.kc.spring.common.BaseEntity;
 //@Table(name = "user")
 public class User extends BaseEntity {
 
-	@Size(min = 10, max = 30)
+	@Size(min = 1, max = 30)
 	private String name;
 
-	private Date birthdate;
+	private Date dateOfBirth;
 
 	//	@Id
 	//	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,13 +27,13 @@ public class User extends BaseEntity {
 	//	}
 
 	//	@Column(name = "username")
+	@Size(min = 1, max = 30)
 	public String getUsername() {
 		return getNumber();
 	}
 
 	public void setUsername(String username) {
 		this.setNumber(username);
-		//this.username = username;
 	}
 
 	public String getName() {
@@ -44,12 +44,12 @@ public class User extends BaseEntity {
 		this.name = name;
 	}
 
-	public Date getBirthdate() {
-		return birthdate;
+	public Date getDateOfBirth() {
+		return dateOfBirth;
 	}
 
-	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public String toString() {
