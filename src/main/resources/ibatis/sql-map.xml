@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!DOCTYPE sqlMap PUBLIC '-//iBATIS.com//DTD SQL Map 2.0//EN' 'http://www.ibatis.com/dtd/sql-map-2.dtd'>
+
+<sqlMap namespace="net.kc.spring.product.dao.ProductMapper">
+	<typeAlias alias="Product" type="net.kc.spring.product.domain.Product" />
+	<typeAlias alias="Order" type="net.kc.spring.order.domain.Order" />
+	<typeAlias alias="OrderItem" type="net.kc.spring.order.domain.OrderItem" />
+
+	<resultMap id="productMap" class="Product">
+		<result property="id" column="id" />
+		<result property="number" column="number" />
+		<result property="name" column="name" />
+		<result property="createDate" column="create_date" />
+		<result property="updateDate" column="update_date" />
+	</resultMap>
+
+	<!--
+	<resultMap id="orderMap" class="Order">
+		<result property="id" column="id" />
+		<result property="number" column="number" />
+		<result property="itemList" select="getItemList" column="id" />
+		<result property="createDate" column="create_date" />
+		<result property="updateDate" column="update_date" />
+	</resultMap>
+	
+	<resultMap id="orderItemMap" class="OrderItem">
+		<result property="id" column="id" />
+		<result property="orderId" column="purchase_order_id" />
+		<result property="product" select="getById" column="product_id" />
+	</resultMap>
+	-->
+
+	<select id="getById" resultMap="productMap">
+		select * from product where id = #id#
+	</select>
+
+	<insert id="insert" parameterClass="Product">
+		<selectKey keyProperty="id" resultClass="long" type="post">call identity()</selectKey>
+		insert into product (number, name, create_date) values (#number#, #name#, #createDate#)
+	</insert>
+
+	<update id="update" parameterClass="Product">
+		update product set number=#number#, name=#name#, update_date=#updateDate# where id=#id#
+	</update>
+
+</sqlMap>

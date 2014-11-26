@@ -1,5 +1,7 @@
 package net.kc.spring.product.dao;
 
+import java.util.Date;
+
 import net.kc.spring.product.domain.Product;
 
 import org.slf4j.Logger;
@@ -26,8 +28,30 @@ public class ProductDaoImpl extends SqlMapClientDaoSupport implements ProductDao
 	}
 
 	@Override
-	public Product getProduct(Long id) {
-		return (Product) getSqlMapClientTemplate().queryForObject(NAMESPACE + ".getProduct", id);
+	public Product getById(Long id) {
+		return (Product) getSqlMapClientTemplate().queryForObject(NAMESPACE + ".getById", id);
+	}
+
+	@Override
+	public Long insert(Product product) {
+		product.setCreateDate(new Date());
+		getSqlMapClientTemplate().insert(NAMESPACE + ".insert", product);
+		return product.getId();
+	}
+
+	@Override
+	public void update(Product product) {
+		product.setUpdateDate(new Date());
+		getSqlMapClientTemplate().insert(NAMESPACE + ".update", product);
+	}
+
+	@Override
+	public void save(Product product) {
+		if (product.getId() == null) {
+			insert(product);
+		} else {
+			update(product);
+		}
 	}
 
 }

@@ -145,9 +145,10 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
+	<!-- Configuration for iBATIS -->
 	<bean id='sqlMapClient' class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name='configLocation' value="classpath:ibatis/sqlmap-config.xml" />
+		<property name='configLocation' value="classpath:ibatis/sql-map-config.xml" />
 		<!--
         <property name='mappingLocations' value="classpath:ibatis/ibatis-mapping.xml"/>
 		-->

@@ -1,9 +1,12 @@
 package net.kc.spring.product.domain;
 
+import javax.validation.constraints.Size;
+
 import net.kc.spring.common.BaseEntity;
 
 public class Product extends BaseEntity {
 
+	@Size(min = 1, max=100)
 	private String name;
 
 	public String getName() {

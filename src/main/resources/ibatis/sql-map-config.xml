@@ -1,9 +1,13 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE sqlMapConfig
-PUBLIC '-//iBATIS.com//DTD SQL Map Config 2.0//EN'
-'http://www.ibatis.com/dtd/sql-map-config-2.dtd'>
+<!DOCTYPE sqlMapConfig PUBLIC '-//iBATIS.com//DTD SQL Map Config 2.0//EN' 'http://www.ibatis.com/dtd/sql-map-config-2.dtd'>
 
 <sqlMapConfig>
+	<!--
+	<properties resource="jdbc.properties" />
+	-->
+
+	<settings useStatementNamespaces="true" enhancementEnabled="true"/>
+
 	<!--
 	<properties resource="jdbc.properties" />
 	<transactionManager type="JDBC">
@@ -15,5 +19,6 @@ PUBLIC '-//iBATIS.com//DTD SQL Map Config 2.0//EN'
 		</dataSource>
 	</transactionManager>
 	-->
-	<sqlMap resource='ibatis/ibatis-map.xml' />
+
+	<sqlMap resource='ibatis/sql-map.xml' />
 </sqlMapConfig>
