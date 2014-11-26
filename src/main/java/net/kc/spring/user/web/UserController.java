@@ -14,7 +14,6 @@ import net.kc.spring.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,9 +38,9 @@ public class UserController {
 	@Autowired
 	private UserService service;
 
-	@Autowired
-	private ConversionService conversionService;
-	
+	//@Autowired
+	//private ConversionService conversionService;
+
 	@Autowired
 	private UserValidator userValidator;
 
@@ -50,24 +49,24 @@ public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	// If InitBinder is enabled, JSR 303 Validation will be disabled
+	// use custom validator will disable the Validation annotation (e.g. @Size) in User object
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		logger.debug("initBinder");
 		// this will apply the validator to all request-handling methods
 		binder.setValidator(userValidator);
-		binder.validate();
 	}
 
 	@RequestMapping(value = "createUserForm", method = RequestMethod.GET)
 	public String createUserForm(Model model) {
+		logger.debug("createUserForm");
 		model.addAttribute(new User());
 		return CREATE_FORM;
 	}
 
 	@RequestMapping(value = "createUser", method = RequestMethod.POST)
-	public String createUser(@Valid @ModelAttribute User user,
-			BindingResult bindingResult, Errors errors) {
+	public String createUser(@Valid @ModelAttribute User user, BindingResult bindingResult, Errors errors) {
+		logger.debug("createUser");
 		if (bindingResult.hasErrors()) {
 			for (FieldError fe : bindingResult.getFieldErrors()) {
 				logger.info("code: " + fe.getCode() + ", field: " + fe.getField() + ", " + fe.getDefaultMessage());
@@ -93,7 +92,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "updateUser", method = RequestMethod.POST)
-	public String updateUser(@Validated @ModelAttribute User user, BindingResult bindingResult, SessionStatus sessionStatus) {
+	public String updateUser(@Valid @ModelAttribute User user, BindingResult bindingResult, SessionStatus sessionStatus) {
 		if (bindingResult.hasErrors()) {
 			for (FieldError fe : bindingResult.getFieldErrors()) {
 				logger.info("code: " + fe.getCode() + ", field: " + fe.getField() + ", " + fe.getDefaultMessage());

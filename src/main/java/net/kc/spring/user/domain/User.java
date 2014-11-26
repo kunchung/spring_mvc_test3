@@ -10,7 +10,7 @@ import net.kc.spring.common.BaseEntity;
 //@Table(name = "user")
 public class User extends BaseEntity {
 
-	@Size(min = 1, max = 30)
+	@Size(min = 10, max = 30)
 	private String name;
 
 	private Date birthdate;
